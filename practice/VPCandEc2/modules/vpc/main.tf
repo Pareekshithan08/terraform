@@ -49,7 +49,15 @@ resource "aws_security_group" "allow_http" {
         protocol = "-1"
         cidr_blocks = [aws_subnet.public_subnet.cidr_block]
     }
-}       
+}     
+
+resource "aws_nat_gateway" "test_nat" {
+    allocation_id = aws_eip.nat_eip.id
+    subnet_id = aws_subnet.public_subnet.id
+}
+resource "aws_eip" "nat_eip" {
+    vpc = true
+}
 
 resource "aws_subnet" "private_subnet" {
     vpc_id = aws_vpc.test_vpc.id
@@ -62,6 +70,7 @@ resource "aws_route_table" "private_route_table" {
 
     route {
         cidr_block = "0.0.0.0/0"
+        nat_gateway_id = aws_nat_gateway.test_nat.id
     }           
   
 }
