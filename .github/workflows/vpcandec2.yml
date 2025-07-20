@@ -16,16 +16,24 @@ jobs:
                 terraform_version: 1.0.0
 
             - name: Initialize Terraform
-              run: terraform init
+              run: |
+                cd practice/VPCandEc2
+                terraform init
 
             - name: Terraform Plan
-              run: terraform plan
+              run: |
+                cd practice/VPCandEc2  
+                terraform plan
             
             - name: Terraform validate
-              run: terraform validate
-              
+              run: |
+                cd practice/VPCandEc2
+                terraform validate
+
             - name: Apply Terraform
-              run: terraform apply -auto-approve
+              run: |
+                cd practice/VPCandEc2
+                terraform apply -auto-approve
 
             - name: Output VPC ID
               run: echo "VPC ID is $(terraform output vpc_id)"
