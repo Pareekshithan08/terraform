@@ -40,14 +40,14 @@ resource "aws_security_group" "allow_http" {
         from_port = 80
         to_port = 80
         protocol = "tcp"
-        cidr_blocks = [aws_subnet.public_subnet.cidr_block]
+        cidr_blocks = ["0.0.0.0/0"]
     }       
 
     egress {
         from_port = 0
         to_port = 0
         protocol = "-1"
-        cidr_blocks = [aws_subnet.public_subnet.cidr_block]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }     
 
@@ -56,7 +56,6 @@ resource "aws_nat_gateway" "test_nat" {
     subnet_id = aws_subnet.public_subnet.id
 }
 resource "aws_eip" "nat_eip" {
-    vpc = true
 }
 
 resource "aws_subnet" "private_subnet" {
