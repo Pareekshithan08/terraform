@@ -23,7 +23,7 @@ resource "aws_route_table" "public_route_table" {
     vpc_id = aws_vpc.test_vpc.id
 
     route {
-        cidr_block = "aws_vpc.test_vpc.cidr_block"
+        cidr_block = "aws_subnet.public_subnet.cidr_block"
         gateway_id = aws_internet_gateway.test_igw.id
     }
 }       
@@ -40,14 +40,14 @@ resource "aws_security_group" "allow_http" {
         from_port = 80
         to_port = 80
         protocol = "tcp"
-        cidr_blocks = ["aws_vpc.test_vpc.cidr_block"]
+        cidr_blocks = ["aws_subnet.public_subnet.cidr_block"]
     }       
 
     egress {
         from_port = 0
         to_port = 0
         protocol = "-1"
-        cidr_blocks = ["aws_vpc.test_vpc.cidr_block"]
+        cidr_blocks = ["aws_subnet.public_subnet.cidr_block"]
     }
 }       
 
@@ -61,7 +61,7 @@ resource "aws_route_table" "preivate_route_table" {
     vpc_id = aws_vpc.test_vpc.id
 
     route {
-        cidr_block = "aws_vpc.test_vpc.cidr_block"  
+        cidr_block = "aws_subnet.private_subnet.cidr_block"  
     }           
   
 }
